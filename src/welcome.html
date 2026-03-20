@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shorts Blocker for YouTube — Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red: #FF0000;
+      --bg: #080808;
+      --surface: #111;
+      --border: #222;
+      --text: #f0f0f0;
+      --muted: #777;
+      --green: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(160deg, #1a0000 0%, #080808 55%);
+      border-bottom: 1px solid #1e0000;
+      padding: 56px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(255,0,0,0.07) 0%, transparent 65%);
+      top: -140px; left: 50%; transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: 68px; height: 68px;
+      background: var(--red);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 0 36px rgba(255,0,0,0.35);
+    }
+
+    .hero-logo svg { width: 36px; height: 36px; }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.15;
+    }
+
+    .hero h1 span { color: var(--red); }
+
+    .hero-sub {
+      margin: 12px auto 0;
+      max-width: 440px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid #333;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.3s, background 0.3s, border-color 0.3s;
+    }
+
+    .badge.active {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.22);
+      color: var(--green);
+    }
+
+    .badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #555;
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .badge.active .dot {
+      background: var(--green);
+      box-shadow: 0 0 7px var(--green);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+
+    /* ── Page wrapper ── */
+    .content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    /* ── Steps ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 44px;
+    }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 16px 18px;
+      animation: fadeUp 0.45s ease both;
+    }
+
+    .step:nth-child(1) { animation-delay: 0.04s; }
+    .step:nth-child(2) { animation-delay: 0.09s; }
+    .step:nth-child(3) { animation-delay: 0.14s; }
+    .step:nth-child(4) { animation-delay: 0.19s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-num {
+      width: 30px; height: 30px;
+      border-radius: 9px;
+      background: var(--red);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-body h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+
+    .step-body p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .step-body code {
+      background: #1c1c1c;
+      border: 1px solid #2a2a2a;
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-size: 12px;
+      color: #f87171;
+      font-family: monospace;
+    }
+
+    /* ── Feature grid ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 44px;
+    }
+
+    @media (max-width: 520px) {
+      .features { grid-template-columns: repeat(2, 1fr); }
+      .hero h1  { font-size: 26px; }
+    }
+
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      animation: fadeUp 0.45s ease both;
+    }
+
+    .feature:nth-child(1) { animation-delay: 0.05s; }
+    .feature:nth-child(2) { animation-delay: 0.10s; }
+    .feature:nth-child(3) { animation-delay: 0.15s; }
+    .feature:nth-child(4) { animation-delay: 0.20s; }
+    .feature:nth-child(5) { animation-delay: 0.25s; }
+    .feature:nth-child(6) { animation-delay: 0.30s; }
+    .feature:nth-child(7) { animation-delay: 0.35s; }
+
+    .feature-icon { font-size: 18px; margin-bottom: 7px; }
+
+    .feature h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: #e8e8e8;
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .feature p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 44px;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      padding: 13px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #ddd;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .faq-q .arrow {
+      color: var(--muted);
+      transition: transform 0.25s;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .arrow { transform: rotate(180deg); }
+
+    .faq-a {
+      display: none;
+      padding: 12px 16px 14px;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CTA ── */
+    .cta {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+    }
+
+    .cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .cta p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 11px 26px;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 18px rgba(255,0,0,0.28);
+    }
+
+    .cta-btn:hover { background: #cc0000; transform: translateY(-1px); }
+
+    /* ── Donation ── */
+    .donate {
+      margin-top: 16px;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+
+    .donate h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .donate p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .donate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 11px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .donate-btn:hover {
+      border-color: #f5a623;
+      background: rgba(245,166,35,0.08);
+      transform: translateY(-1px);
+    }
+
+    .donate-btn .kofi-icon { font-size: 18px; }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="5" width="20" height="14" rx="3" fill="white"/>
+        <polygon points="10,9 10,16 17,12" fill="#FF0000"/>
+        <rect x="1" y="11" width="22" height="3" rx="1.5" fill="white" transform="rotate(-35 12 12)"/>
+      </svg>
+    </div>
+    <h1>Shorts Blocker <span>for YouTube</span></h1>
+    <p class="hero-sub">Take back your feed. Shorts are hidden instantly across every page — no refresh, no fuss.</p>
+    <div class="badge" id="statusBadge">
+      <span class="dot" id="badgeDot"></span>
+      <span id="badgeText">Checking status…</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <p class="section-label">How to use</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Find the extension icon</h3>
+          <p>Look for the <strong>red blocked-play icon</strong> in your Chrome toolbar (top-right). Don't see it? Click the 🧩 puzzle piece and pin <em>Shorts Blocker</em>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Click the icon to open the panel</h3>
+          <p>A small panel appears. It's <strong>ON by default</strong> — Shorts are already blocked the moment you install.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Toggle Shorts on or off</h3>
+          <p>Flip the switch anytime. Changes apply <strong>instantly</strong> — no page refresh needed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Browse YouTube normally</h3>
+          <p>Visit <code>youtube.com</code> as usual. The extension runs silently, hiding Shorts on every page automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label">What gets hidden</p>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🏠</div>
+        <h4>Home feed shelf</h4>
+        <p>The Shorts row between regular videos</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔍</div>
+        <h4>Search results</h4>
+        <p>Shorts strips on the search page</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📺</div>
+        <h4>Channel Shorts tab</h4>
+        <p>The Shorts tab on channel pages</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📌</div>
+        <h4>Sidebar recommendations</h4>
+        <p>Shorts in the "Up Next" panel</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧭</div>
+        <h4>Full sidebar menu</h4>
+        <p>The Shorts link in the expanded left nav</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">◀</div>
+        <h4>Mini sidebar</h4>
+        <p>The Shorts icon in the collapsed nav</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🏷️</div>
+        <h4>Filter chips</h4>
+        <p>The Shorts chip in search filters</p>
+      </div>
+    </div>
+
+    <p class="section-label">Common questions</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">Do I need to refresh YouTube after toggling? <span class="arrow">▼</span></div>
+        <div class="faq-a">No. The extension injects a live CSS rule directly into the page — toggle it and Shorts vanish (or reappear) immediately.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Will my setting be remembered? <span class="arrow">▼</span></div>
+        <div class="faq-a">Yes. Your preference is saved in Chrome's sync storage, so it persists across sessions and even syncs between devices if you're signed into Chrome.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does this affect regular YouTube videos? <span class="arrow">▼</span></div>
+        <div class="faq-a">Not at all. Only Shorts-specific elements are targeted. Regular videos, playlists, channels, and all other content are completely untouched.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if some Shorts still slip through? <span class="arrow">▼</span></div>
+        <div class="faq-a">YouTube sometimes updates its page structure. Try toggling the extension off and back on, or reload the page. The extension re-applies its rules automatically as you navigate.</div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <h2>Ready for a cleaner feed?</h2>
+      <p>The extension is already active. Head to YouTube and enjoy.</p>
+      <button id="open-youtube" class="cta-btn">▶ &nbsp; Open YouTube</button>
+    </div>
+
+    <div class="donate">
+      <h2>Enjoying the extension?</h2>
+      <p>It's free and always will be. If it saves you from Shorts-induced brain rot, a coffee keeps the lights on.</p>
+      <a class="donate-btn" href="https://ko-fi.com/farithadnan" target="_blank" rel="noopener">
+        <span class="kofi-icon">☕</span>
+        Support on Ko-fi
+      </a>
+    </div>
+
+  </div>
+
+  <script src="welcome.js"></script>
+</body>
+</html>

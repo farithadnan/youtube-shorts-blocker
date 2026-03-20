@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#0f0f0f"/>
+
+  <!-- Red YouTube-style rounded rect -->
+  <rect x="22" y="38" width="84" height="52" rx="12" fill="#FF0000"/>
+
+  <!-- Play triangle (white) -->
+  <polygon points="52,48 52,80 88,64" fill="white"/>
+
+  <!-- Strike-through bar (the "block Shorts" symbol) -->
+  <rect x="18" y="60" width="92" height="10" rx="5" fill="white" transform="rotate(-35 64 64)"/>
+  <rect x="18" y="60" width="92" height="10" rx="5" fill="#0f0f0f" opacity="0.3" transform="rotate(-35 64 64)"/>
+</svg>

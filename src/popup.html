@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red: #FF0000;
+      --red-dim: #cc0000;
+      --bg: #0a0a0a;
+      --surface: #161616;
+      --surface2: #1f1f1f;
+      --text: #f0f0f0;
+      --muted: #777;
+      --green: #22c55e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 280px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--surface);
+      padding: 14px 16px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #222;
+    }
+
+    .logo-wrap {
+      width: 36px; height: 36px;
+      background: var(--red);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(255,0,0,0.4);
+    }
+
+    .logo-wrap svg { width: 20px; height: 20px; }
+
+    .header-text h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .header-text p {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .help-btn {
+      margin-left: auto;
+      background: none;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 4px 9px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .help-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── Main toggle card ── */
+    .card {
+      margin: 12px;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid #222;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-label strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .toggle-label span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Toggle switch */
+    .switch { position: relative; width: 44px; height: 24px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .knob {
+      position: absolute; inset: 0;
+      background: #333;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .knob:before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    input:checked + .knob { background: var(--red); }
+    input:checked + .knob:before { transform: translateX(20px); }
+
+    /* Status pill */
+    .status-pill {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--surface2);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--muted);
+      transition: all 0.3s;
+    }
+    .status-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #444;
+      transition: background 0.3s;
+    }
+    .status-pill.active { color: var(--green); }
+    .status-pill.active .dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+    /* ── What's hidden section ── */
+    .section-header {
+      margin: 0 12px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .section-arrow {
+      font-size: 9px;
+      color: var(--muted);
+      transition: transform 0.25s;
+    }
+
+    .section-header.collapsed .section-arrow { transform: rotate(-90deg); }
+
+    .items {
+      margin: 0 12px 12px;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid #222;
+      overflow: hidden;
+      max-height: 200px;
+      transition: max-height 0.25s ease, opacity 0.25s ease, margin 0.25s ease;
+      opacity: 1;
+    }
+
+    .items.collapsed {
+      max-height: 0;
+      opacity: 0;
+      margin-bottom: 0;
+      border-color: transparent;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 11px;
+      color: #ccc;
+    }
+    .item:last-child { border-bottom: none; }
+    .item .icon { font-size: 13px; width: 18px; text-align: center; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 8px 12px 12px;
+    }
+
+    .footer-btn {
+      display: block;
+      width: 100%;
+      padding: 9px;
+      border-radius: 8px;
+      border: 1px solid #222;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .footer-btn:hover { border-color: var(--red); color: var(--red); }
+
+    .donate-link {
+      display: block;
+      text-align: center;
+      margin-top: 6px;
+      padding-bottom: 4px;
+      font-size: 10px;
+      color: #444;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .donate-link:hover { color: #f5a623; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="5" width="20" height="14" rx="3" fill="white"/>
+        <polygon points="10,9 10,16 17,12" fill="#FF0000"/>
+        <rect x="1" y="11" width="22" height="3" rx="1.5" fill="white" transform="rotate(-35 12 12)"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Shorts Blocker</h1>
+      <p>for YouTube™</p>
+    </div>
+    <button class="help-btn" id="helpBtn">📖 Full Guide</button>
+  </div>
+
+  <div class="card">
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <strong>Block YouTube Shorts</strong>
+        <span>Hides Shorts across all of YouTube</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="toggle" />
+        <span class="knob"></span>
+      </label>
+    </div>
+    <div class="status-pill" id="statusPill">
+      <span class="dot"></span>
+      <span id="statusText">Loading…</span>
+    </div>
+  </div>
+
+  <div class="section-header" id="itemsToggle">
+    <span class="section-label">What gets hidden</span>
+    <span class="section-arrow">▼</span>
+  </div>
+  <div class="items" id="itemsList">
+    <div class="item"><span class="icon">🏠</span> Shorts shelf on homepage</div>
+    <div class="item"><span class="icon">🔍</span> Shorts in search results</div>
+    <div class="item"><span class="icon">📺</span> Shorts tab on channels</div>
+    <div class="item"><span class="icon">📌</span> Shorts in sidebar</div>
+    <div class="item"><span class="icon">🧭</span> Shorts link in left menu</div>
+  </div>
+
+  <div class="footer">
+    <button class="footer-btn" id="openYtBtn">▶ Open YouTube</button>
+    <a class="donate-link" id="donateLink" href="#" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
