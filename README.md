@@ -109,4 +109,4 @@ See [PUBLISHING.md](PUBLISHING.md) for the full guide covering Ko-fi setup, Chro
 
 ## License
 
-MIT
+[MIT](LICENSE)
