@@ -1,8 +1,23 @@
+![Shorts Blocker for YouTube](assets/promo-marquee-1400x560.html.png)
+
 # Shorts Blocker for YouTube
 
 A lightweight Chrome extension that instantly hides YouTube Shorts across every page — no refresh needed, no bloat.
 
 [![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-f5a623?logo=ko-fi&logoColor=white)](https://ko-fi.com/farithadnan)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+---
+
+## Screenshots
+
+| Homepage | Search |
+|---|---|
+| ![Homepage](assets/Homepage.png) | ![Search](assets/search.png) |
+
+| Sidebar | Popup |
+|---|---|
+| ![Sidebar](assets/Sidebar.png) | ![Popup](assets/Popup.png) |
 
 ---
 
@@ -54,7 +69,7 @@ Extensions like uBlock Origin and SponsorBlock work the same way and are used by
 ## Install (developer mode)
 
 1. Clone or download this repo
-2. Add `icon16.png`, `icon48.png`, `icon128.png` to the `icons/` folder (see sizes below)
+2. Add `icon16.png`, `icon48.png`, `icon128.png` to the `icons/` folder
 3. Go to `chrome://extensions`, enable **Developer mode**
 4. Click **Load unpacked** and select this folder
 
@@ -68,19 +83,27 @@ Extensions like uBlock Origin and SponsorBlock work the same way and are used by
 youtube-short-hider/
 ├── manifest.json
 ├── README.md
+├── PUBLISHING.md              # Ko-fi, Chrome Web Store & CI/CD setup guide
 ├── src/
-│   ├── background.js      # Service worker — sets default state on install
-│   ├── content.js         # Injected into youtube.com — applies/removes CSS
-│   ├── popup.html / .js   # Toolbar popup
-│   └── welcome.html / .js # First-run guide page
+│   ├── background.js          # Service worker — sets default state on install
+│   ├── content.js             # Injected into youtube.com — applies/removes CSS
+│   ├── popup.html / .js       # Toolbar popup
+│   └── welcome.html / .js     # First-run guide page
 ├── icons/
-│   ├── icon.svg           # Source icon
+│   ├── icon.svg               # Source icon
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
+├── assets/                    # Store listing & promo images
 └── .github/workflows/
-    └── release.yml        # Auto-publish to Chrome Web Store on push to main
+    └── release.yml            # Auto-publish to Chrome Web Store on push to main
 ```
+
+---
+
+## Publishing & CI/CD
+
+See [PUBLISHING.md](PUBLISHING.md) for the full guide covering Ko-fi setup, Chrome Web Store submission, Google OAuth credentials, and GitHub Actions auto-deploy.
 
 ---
 
